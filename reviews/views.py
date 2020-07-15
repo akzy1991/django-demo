@@ -6,7 +6,7 @@ from django.shortcuts import render, HttpResponse
 def index(request):
     fname = 'alvin'
     lname = 'koh'
-    return render(request, 'books/index.template.html', {
+    return render(request, 'reviews/reviews.template.html', {
         'first_name': fname,
-        'last_name': lname
+        'last_name': lname,
     })
