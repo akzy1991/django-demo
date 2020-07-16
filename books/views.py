@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
-from .models import Book
+from django.shortcuts import render, HttpResponse, redirect, reverse
+from .models import Book, Author
+from .forms import BookForm, AuthorForm
 
 # Create your views here.
 
@@ -18,3 +19,34 @@ def show_books(request):
     return render(request, 'books/all_books.template.html', {
         'books': all_books
     })
+
+
+def create_book(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        form.save()
+        return redirect(reverse(show_books))
+    else:
+        form = BookForm()
+        return render(request, 'books/create_book.template.html', {
+            'form': form
+        })
+
+
+def show_authors(request):
+    all_authors = Author.objects.all()
+    return render(request, 'books/all_authors.template.html', {
+        'authors': all_authors
+    })
+
+
+def create_authors(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        form.save()
+        return redirect(reverse(show_authors))
+    else:
+        form = AuthorForm()
+        return render(request, 'books/create_author.template.html', {
+            'form': form
+        })
