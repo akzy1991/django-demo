@@ -12,6 +12,7 @@
             <li>
             {{b.title}}
             <a href="{% url 'update_book_route' book_id=b.id %}">Edit</a>
+            <a href="{% url 'delete_book_route' book_id=b.id %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
