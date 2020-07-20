@@ -7,6 +7,7 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ('title', 'desc', 'ISBN', 'pageCount')
 
+
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
