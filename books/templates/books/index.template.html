@@ -1,20 +1,10 @@
+{% extends 'base.template.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-	<title>Document</title>
-</head>
-
-<body>
+{% block content %}
     {% if request.user.is_authenticated %}
 	<h1>welcome, {{request.user}}</h1>
     {% endif %}
     <p>
         hi {{first_name}} {{last_name}}
     </p>
-</body>
-</html>
+{% endblock content %}
