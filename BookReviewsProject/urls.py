@@ -29,9 +29,11 @@ urlpatterns = [
     path('books/delete/<book_id>/', books.views.delete_book,
          name='delete_book_route'),
     path('books/authors/all/', books.views.show_authors),
+    path('books/author/create/', books.views.create_author),
     path('books/authors/update/<author_id>/', books.views.edit_author,
          name='update_author_route'),
-    path('books/author/create/', books.views.create_author),
+    path('books/authors/delete/<author_id>/', books.views.delete_author,
+         name='delete_author_route'),
     path('reviews/', reviews.views.index),
     path('forum/', forum.views.forum_home)
 ]

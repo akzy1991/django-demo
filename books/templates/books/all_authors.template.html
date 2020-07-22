@@ -12,6 +12,7 @@
             <li>
             {{a.first_name}} {{a.last_name}}
             <a href="{% url 'update_author_route' author_id=a.id %}">Edit</a>
+            <a href="{% url 'delete_author_route' author_id=a.id %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
