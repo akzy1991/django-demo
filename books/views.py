@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Book, Author
 from .forms import BookForm, AuthorForm
@@ -27,6 +28,7 @@ def create_book(request):
     if request.method == "POST":
         form = BookForm(request.POST)
         form.save()
+        messages.success(request, 'new book has been created')
         return redirect(reverse(show_books))
     else:
         form = BookForm()
@@ -96,4 +98,3 @@ def delete_author(request, author_id):
     return render(request, 'books/delete_author.template.html', {
         'author': author
     })
-
