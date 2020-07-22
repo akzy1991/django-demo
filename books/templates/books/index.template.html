@@ -10,7 +10,9 @@
 </head>
 
 <body>
-	<h1>welcome to book reviews</h1>
+    {% if request.user.is_authenticated %}
+	<h1>welcome, {{request.user}}</h1>
+    {% endif %}
     <p>
         hi {{first_name}} {{last_name}}
     </p>
