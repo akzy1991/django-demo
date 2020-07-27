@@ -1,0 +1,11 @@
+{% extends 'base.template.html' %}
+    {% block content %}
+    <h1>ALL REVIEWS</h1>
+    <ul>
+        {% for r in reviews %}
+            <li>
+            <a href="{% url 'review_details' review_id=r.id %}">{{r.title}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}

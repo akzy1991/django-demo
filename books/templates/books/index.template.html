@@ -1,10 +1,21 @@
 {% extends 'base.template.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
     {% if request.user.is_authenticated %}
 	<h1>welcome, {{request.user}}</h1>
     {% endif %}
-    <p>
-        hi {{first_name}} {{last_name}}
-    </p>
+
+    <form method="GET">
+        {{form|crispy}}
+        <input type="submit" value="Search">
+    </form>
+
+    <h2 class="mt-2">Books</h2>
+    <ul>
+     {% for b in books %}
+     <li>{{b.title}} page count = {{b.pageCount}}</li>
+     {% endfor %}
+    </ul>
 {% endblock content %}

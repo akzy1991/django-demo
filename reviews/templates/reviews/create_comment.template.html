@@ -1,0 +1,10 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags%}
+{% block content%}
+<p>Commenting on "{{review.content}}"... </p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Create Comment" class="btn btn-primary">
+</form>
+{% endblock content%}

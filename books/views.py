@@ -1,25 +1,62 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Book, Author
-from .forms import BookForm, AuthorForm
+from .forms import BookForm, AuthorForm, SearchForm
 
 # Create your views here.
 
 
 def index(request):
-    fname = 'alvin'
-    lname = 'koh'
-    return render(request, 'books/index.template.html', {
-        'first_name': fname,
-        'last_name': lname
-    })
+    # subquery = Q(title_icontains='ring')  # WHERE 'title' LIKE 'ring'
+    # genre_filter = Q(genre=1)
+
+    # SELECT * from Books WHERE 'title' LIKE ring
+    # books = books.filter(subquery & genre_filter)
+    # books.filter(query)
+
+    form = SearchForm(request.GET)
+    if request.GET:
+        query = ~Q(pk__in=[])
+        if 'title' in request.GET and request.GET['title']:
+            title = request.GET['title']
+            query = query & Q(title__icontains=title)
+        if 'genre' in request.GET and request.GET["genre"]:
+            genre_id = request.GET['genre']
+            query = query & Q(genre=genre_id)
+        if 'min_page_count' in request.GET and request.GET['min_page_count']:
+            min_page_count = request.GET['min_page_count']
+            query = query & Q(pageCount__gte=min_page_count)
+
+        # select * from Books
+        books = Book.objects.all()
+        # SELECT * FROM Books WHERE title LIKES "%{title}%""
+        books = books.filter(query)
+
+        return render(request, 'books/index.template.html', {
+            'form': form,
+            'books': books
+        })
+    else:
+        books = Book.objects.all()
+        return render(request, 'books/index.template.html', {
+            'form': form,
+            'books': books
+        })
 
 
 def show_books(request):
     all_books = Book.objects.all()
     return render(request, 'books/all_books.template.html', {
         'books': all_books
+    })
+
+
+def view_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    return render(request, 'books/details.template.html', {
+        'book': book
     })
 
 

@@ -1,0 +1,52 @@
+{% extends 'base.template.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h1>{{book.title}}</h1></div>
+            <h2>Authors</h2>
+            <ul>
+                {%for a in book.authors.all%}
+                    <li>{{a.first_name}} {{a.last_name}}</li>
+                {% endfor %}
+            </ul>
+            <h2>Tags</h2>
+            {%for t in book.tags.all%}
+                <span class="badge badge-primary">{{t.title}}</span>
+            {% endfor %}
+            <div class="mt-3">
+                <a class="btn btn-primary" href="{% url 'create_review_route' book_id=book.id %}">Add a review</a>
+            </div>
+        </div>
+    </div>
+
+    <h1>Reviews</h1>
+    {% for r in book.review_set.all %}
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h2>{{r.title}}</h2>
+                </div>
+                <div>{{r.content}}</div>
+                <p>By {{r.user.username}}</p>
+                <a href="{% url 'create_comment_route' review_id=r.id %}" class="btn btn-primary btn-sm">Leave a comment</a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><h2>Comments</h2></div>
+                    {% for comment in r.comment_set.all %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p>{{comment.content}}</p>
+                            <small>By {{comment.user.username}} on {{comment.date}}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+
+{% endblock content %}

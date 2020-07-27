@@ -1,0 +1,30 @@
+{% extends 'base.template.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h1>{{review.title}}</h1>
+            </div>
+            <h2>Review for book {{review.book.title}}</h2>
+            <p>{{review.content}}</p>
+            <small class="text-muted">
+                By {{review.user.username}} on {{review.date}}
+            </small>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h1>Comments</h1>
+            <a class="btn btn-primary" href="">Add Comment</a>
+            {% for comment in reviews.comment.all %}
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{comment.content}}</p>
+                        <small class="text-muted">By {{comment.user.username}} on {{comment.date}}</small>            
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
