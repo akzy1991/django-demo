@@ -45,6 +45,7 @@ class Book(models.Model):
     tags = models.ManyToManyField(Tag)
     authors = models.ManyToManyField(Author)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=3, blank=False)
 
     def __str__(self):
         return self.title
