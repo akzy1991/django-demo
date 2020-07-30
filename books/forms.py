@@ -1,12 +1,14 @@
 from django import forms
 from .models import Book, Author, Genre
+from cloudinary.forms import CloudinaryJsFileField
 
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ('title', 'authors', 'desc', 'ISBN', 'pageCount', 'genre',
-                  'category', 'tags', 'owner')
+                  'category', 'tags', 'owner', 'cost')
+    cover = CloudinaryJsFileField()
 
 
 class AuthorForm(forms.ModelForm):

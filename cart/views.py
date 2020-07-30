@@ -34,7 +34,7 @@ def view_cart(request):
     total = 0
 
     for k, v in cart.items():
-        total += float(v['cost'])
+        total = float(v['cost']) * int(v['qty'])
 
     return render(request, 'cart/view_cart.template.html', {
         'cart': cart,
@@ -50,3 +50,16 @@ def remove_from_cart(request, book_id):
         messages.success(request, 'item has been removed')
 
     return redirect(reverse(view_cart))
+
+
+def update_quantity(request, book_id):
+    cart = request.session['shopping_cart']
+    if book_id in cart:
+        cart[book_id]['qty'] = request.POST['qty']
+        cart[book_id]['total_cost'] = int(request.POST['qty']) * float(cart[book_id]['cost'])
+        request.session['shopping_cart'] = cart
+        messages.success(request, 'quantity has been updated')
+        return redirect(reverse(view_cart))
+    else:
+        messages.success(request, 'Book doesnt exist')
+        return redirect(reverse(view_cart))
